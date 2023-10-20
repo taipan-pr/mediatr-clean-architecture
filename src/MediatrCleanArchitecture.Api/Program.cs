@@ -1,4 +1,10 @@
+using MediatrCleanArchitecture.Api.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Setup configuration from appsettings.json files by environments
+// set in launchSettings.json => ASPNETCORE_ENVIRONMENT
+builder.Host.UseAppConfigurations();
 
 // Add services to the container.
 
