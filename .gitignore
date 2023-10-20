@@ -361,7 +361,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-local.settings.json
 appsettings.Local.json
 
 .idea
+.docker-data
+.logs
