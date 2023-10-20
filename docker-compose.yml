@@ -12,3 +12,25 @@ services:
       - "5341:5341"
     volumes:
       - ./.docker-data/seq:/data
+
+  postgres-db:
+    image: postgres
+    container_name: postgres-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mediatr
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.docker-data/postgres:/var/lib/postgresql/data
+
+  postgres-ui:
+    depends_on:
+     - postgres-db
+    image: adminer
+    container_name: postgres-ui
+    restart: unless-stopped
+    ports:
+      - 5102:8080

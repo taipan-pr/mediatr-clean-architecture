@@ -32,5 +32,11 @@
   "Seq": {
     "HostName": "http://localhost:5341",
     "ApiKey": "xxx"
+  },
+  "ConnectionStrings": {
+    "Postgres": "Host=localhost;Username=postgres;Password=postgres;Database=mediatr"
+  },
+  "Postgres": {
+    "IsSeedingRequired": true
   }
 }

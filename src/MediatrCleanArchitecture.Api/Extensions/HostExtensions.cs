@@ -24,16 +24,17 @@ public static class HostExtensions
     {
         host.UseSerilog((context, services, config) =>
         {
-            if (!string.IsNullOrWhiteSpace(context.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
+            if(!string.IsNullOrWhiteSpace(context.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
             {
                 config.WriteTo.ApplicationInsights(new TelemetryConfiguration
-                {
-                    ConnectionString = context.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]
-                }, TelemetryConverter.Traces);
+                    {
+                        ConnectionString = context.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]
+                    },
+                    TelemetryConverter.Traces);
             }
 
-            if (!string.IsNullOrWhiteSpace(context.Configuration["Seq:HostName"]) &&
-                !string.IsNullOrWhiteSpace(context.Configuration["Seq:ApiKey"]))
+            if(!string.IsNullOrWhiteSpace(context.Configuration["Seq:HostName"]) &&
+               !string.IsNullOrWhiteSpace(context.Configuration["Seq:ApiKey"]))
             {
                 config.WriteTo.Seq(
                     context.Configuration["Seq:HostName"]!,

@@ -1,4 +1,7 @@
 using MediatrCleanArchitecture.Api.Extensions;
+using MediatrCleanArchitecture.Application.Extensions;
+using MediatrCleanArchitecture.Application.Interfaces;
+using MediatrCleanArchitecture.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,10 @@ builder.Host
     .UseSeriLog();
 
 // Add services to the container.
+builder.Services
+    .ConfigureInfrastructureOptions(builder.Configuration)
+    .AddInfrastructureServices(builder.Configuration)
+    .AddApplicationServices();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -18,6 +25,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// Run migrations and seed database if appsettings.json required
+if(builder.Configuration.GetValue<bool>("Postgres:IsSeedingRequired"))
+{
+    using var scope = app.Services.CreateScope();
+    var dataContext = scope.ServiceProvider.GetRequiredService<IDbContext>();
+    await dataContext.SeedDatabase();
+}
 
 // Configure the HTTP request pipeline.
 if(app.Environment.IsDevelopment())
