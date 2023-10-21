@@ -1,5 +1,6 @@
 using MediatrCleanArchitecture.Api;
 using MediatrCleanArchitecture.Api.Extensions;
+using MediatrCleanArchitecture.Api.Middlewares;
 using MediatrCleanArchitecture.Application.Extensions;
 using MediatrCleanArchitecture.Application.Interfaces;
 using MediatrCleanArchitecture.Infrastructure.Extensions;
@@ -20,9 +21,13 @@ builder.Host
 
 // Add services to the container.
 builder.Services
+    // Add options
+    .AddJsonOptions()
+    .AddInfrastructureOptions(builder.Configuration)
+    .AddApplicationOptions(builder.Configuration)
+
     // Configure options
-    .ConfigureInfrastructureOptions(builder.Configuration)
-    .ConfigureApplicationOptions(builder.Configuration)
+    .Configure<RouteOptions>(options => options.LowercaseUrls = true)
 
     // Add services, all services are internal
     .AddInfrastructureServices()
@@ -52,6 +57,12 @@ if(app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<TimerMiddleware>();
+
+app.UseMiddleware<RequestResponseLoggerMiddleware>();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseAuthorization();
 

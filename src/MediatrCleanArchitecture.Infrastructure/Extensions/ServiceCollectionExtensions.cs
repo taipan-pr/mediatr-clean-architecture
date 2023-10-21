@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection ConfigureInfrastructureOptions(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructureOptions(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddOptions<PostgresOptions>()
             .BindConfiguration(PostgresOptions.ConfigurationName)
