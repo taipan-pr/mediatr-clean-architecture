@@ -30,7 +30,7 @@ internal class PostgresDataContext : DbContext, IDbContext
         Employees?.AddRangeAsync(
             new Employee
             {
-                Id = Guid.NewGuid().ToString("N"),
+                Id = "406d7787a20b4b41a1ff8d4b26a32f40",
                 FirstName = "Taipan",
                 LastName = "Prasithpongchai"
             },

@@ -20,6 +20,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediatrCleanArchitecture.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediatrCleanArchitecture.Infrastructure.UnitTests", "tests\MediatrCleanArchitecture.Infrastructure.UnitTests\MediatrCleanArchitecture.Infrastructure.UnitTests.csproj", "{F1E2AB63-40AD-4242-8B27-6312DF9423BF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "requests", "requests", "{33E7407D-CE3E-408B-9F37-E919433B7013}"
+	ProjectSection(SolutionItems) = preProject
+		requests\DependencyInjectionRequests.http = requests\DependencyInjectionRequests.http
+		requests\EmployeeRequests.http = requests\EmployeeRequests.http
+		requests\http-client.env.json = requests\http-client.env.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

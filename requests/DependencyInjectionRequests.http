@@ -1,0 +1,13 @@
+GET {{host}}/dependencyinjection
+
+###
+
+POST {{host}}/dependencyinjection
+
+###
+
+GET {{host}}/dependencyinjection
+
+###
+
+POST {{host}}/dependencyinjection/sendemail
