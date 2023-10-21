@@ -23,8 +23,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "requests", "requests", "{33E7407D-CE3E-408B-9F37-E919433B7013}"
 	ProjectSection(SolutionItems) = preProject
 		requests\DependencyInjectionRequests.http = requests\DependencyInjectionRequests.http
-		requests\EmployeeRequests.http = requests\EmployeeRequests.http
 		requests\http-client.env.json = requests\http-client.env.json
+		requests\EmployeesRequests.http = requests\EmployeesRequests.http
 	EndProjectSection
 EndProject
 Global

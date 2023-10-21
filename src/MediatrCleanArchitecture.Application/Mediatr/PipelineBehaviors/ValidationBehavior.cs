@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-namespace MediatrCleanArchitecture.Application.PipelineBehaviors;
+namespace MediatrCleanArchitecture.Application.Mediatr.PipelineBehaviors;
 
-public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+internal class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;

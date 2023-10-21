@@ -14,6 +14,8 @@ internal class GetEmployeeByIdValidator : AbstractValidator<GetEmployeeByIdReque
 
     public override Task<ValidationResult> ValidateAsync(ValidationContext<GetEmployeeByIdRequest> context, CancellationToken cancellation = new CancellationToken())
     {
+        RuleLevelCascadeMode = CascadeMode.Stop;
+
         RuleFor(e => e.Id)
             .NotEmpty()
             .MustAsync(async (id, cancellationToken) =>

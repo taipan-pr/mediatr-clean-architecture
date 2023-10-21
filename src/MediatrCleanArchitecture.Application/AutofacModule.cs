@@ -2,7 +2,7 @@
 using Autofac;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using MediatR.Extensions.Autofac.DependencyInjection.Builder;
-using MediatrCleanArchitecture.Application.PipelineBehaviors;
+using MediatrCleanArchitecture.Application.Mediatr.PipelineBehaviors;
 using MediatrCleanArchitecture.Application.Services;
 using Module = Autofac.Module;
 

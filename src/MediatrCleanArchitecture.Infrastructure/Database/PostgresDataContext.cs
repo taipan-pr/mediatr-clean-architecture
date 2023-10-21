@@ -18,6 +18,8 @@ internal class PostgresDataContext : DbContext, IDbContext
         modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
     }
 
+    public Task<int> SaveChangesAsync() => base.SaveChangesAsync();
+
     public async Task SeedDatabase()
     {
         // Run migration scripts

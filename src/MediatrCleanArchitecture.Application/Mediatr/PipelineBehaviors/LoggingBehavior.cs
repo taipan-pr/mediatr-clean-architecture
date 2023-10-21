@@ -2,9 +2,9 @@
 using MediatR;
 using Serilog.Context;
 
-namespace MediatrCleanArchitecture.Application.PipelineBehaviors;
+namespace MediatrCleanArchitecture.Application.Mediatr.PipelineBehaviors;
 
-public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+internal class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
     private readonly ILogger _logger;
