@@ -1,5 +1,6 @@
-﻿using MediatrCleanArchitecture.Application.Interfaces;
-using MediatrCleanArchitecture.Domain.Entities;
+﻿using MediatR;
+using MediatrCleanArchitecture.Application.Queries.GetAllEmployee;
+using MediatrCleanArchitecture.Application.Queries.GetEmployeeById;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediatrCleanArchitecture.Api.Controllers;
@@ -9,28 +10,32 @@ namespace MediatrCleanArchitecture.Api.Controllers;
 public class EmployeeController : ControllerBase
 {
     private readonly ILogger _logger;
-    private readonly IEmployeeService _employeeService;
+    private readonly ISender _sender;
 
-    public EmployeeController(ILogger logger, IEmployeeService employeeService)
+    public EmployeeController(ILogger logger, ISender sender)
     {
         _logger = logger;
-        _employeeService = employeeService;
+        _sender = sender;
     }
 
     [HttpGet]
-    public async Task<IEnumerable<Employee>> Get()
+    public async Task<IResult> Get(CancellationToken cancellationToken)
     {
         _logger.Information("Hello world, from {Controller}.{Action}", nameof(EmployeeController), nameof(Get));
-        var employees = await _employeeService.GetAllEmployees();
-        return employees;
+        var employees = await _sender.Send(new GetAllEmployeeRequest(), cancellationToken);
+        return Results.Ok(employees);
     }
 
     [HttpGet]
     [Route("{id}")]
-    public async Task<IResult> GetById(string id)
+    public async Task<IResult> GetById(string id, CancellationToken cancellationToken)
     {
         _logger.Information("Hello world, from {Controller}.{Action}", nameof(EmployeeController), nameof(GetById));
-        var employee = await _employeeService.GetEmployeeById(id);
+        var employee = await _sender.Send(new GetEmployeeByIdRequest
+            {
+                Id = id
+            },
+            cancellationToken);
         return employee is null ? Results.NotFound() : Results.Ok(employee);
     }
 }

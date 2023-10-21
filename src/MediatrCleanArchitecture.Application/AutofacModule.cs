@@ -1,5 +1,8 @@
 ﻿using System.Reflection;
 using Autofac;
+using MediatR.Extensions.Autofac.DependencyInjection;
+using MediatR.Extensions.Autofac.DependencyInjection.Builder;
+using MediatrCleanArchitecture.Application.PipelineBehaviors;
 using MediatrCleanArchitecture.Application.Services;
 using Module = Autofac.Module;
 
@@ -15,5 +18,17 @@ public class AutofacModule : Module
             .Except<InstancePerLifetimeScope>(e => e.InstancePerLifetimeScope().AsImplementedInterfaces())
             .Except<InstancePerDependency>(e => e.InstancePerDependency().AsImplementedInterfaces())
             .AsImplementedInterfaces();
+
+        var configuration = MediatRConfigurationBuilder
+            .Create(Assembly.GetExecutingAssembly())
+            .WithAllOpenGenericHandlerTypesRegistered()
+            .WithRegistrationScope(RegistrationScope.Scoped)
+            .WithCustomPipelineBehaviors(new[]
+            {
+                typeof(LoggingBehavior<,>),
+                typeof(ValidationBehavior<,>)
+            })
+            .Build();
+        builder.RegisterMediatR(configuration);
     }
 }
