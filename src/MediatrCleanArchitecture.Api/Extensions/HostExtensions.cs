@@ -1,4 +1,6 @@
-﻿using Microsoft.ApplicationInsights.Extensibility;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Microsoft.ApplicationInsights.Extensibility;
 using Serilog;
 using Serilog.Exceptions;
 
@@ -17,6 +19,16 @@ public static class HostExtensions
             config.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
             config.AddJsonFile("local.settings.json", optional: true, reloadOnChange: true);
         });
+        return host;
+    }
+
+    public static IHostBuilder UseAutofacProviderFactory<TModule>(this IHostBuilder host)
+    {
+        host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+            .ConfigureContainer<ContainerBuilder>(e =>
+            {
+                e.RegisterAssemblyModules(typeof(TModule).Assembly);
+            });
         return host;
     }
 

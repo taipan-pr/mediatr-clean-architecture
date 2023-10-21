@@ -1,7 +1,9 @@
+using MediatrCleanArchitecture.Api;
 using MediatrCleanArchitecture.Api.Extensions;
 using MediatrCleanArchitecture.Application.Extensions;
 using MediatrCleanArchitecture.Application.Interfaces;
 using MediatrCleanArchitecture.Infrastructure.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,12 +13,20 @@ builder.Host
     .UseAppConfigurations()
 
     // Setup SeriLog from configuration in appsettings.json
-    .UseSeriLog();
+    .UseSeriLog()
+
+    // Setup Autofac for DI container
+    .UseAutofacProviderFactory<AutofacModule>();
 
 // Add services to the container.
 builder.Services
+    // Configure options
     .ConfigureInfrastructureOptions(builder.Configuration)
-    .AddInfrastructureServices(builder.Configuration)
+    .ConfigureApplicationOptions(builder.Configuration)
+
+    // Add services, all services are internal
+    .AddInfrastructureServices()
+    .AddPostgresDbContext(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")))
     .AddApplicationServices();
 
 builder.Services.AddControllers();

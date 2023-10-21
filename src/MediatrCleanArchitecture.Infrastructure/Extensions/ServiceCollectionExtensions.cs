@@ -1,5 +1,4 @@
-﻿using MediatrCleanArchitecture.Application.Interfaces;
-using MediatrCleanArchitecture.Infrastructure.Database;
+﻿using MediatrCleanArchitecture.Infrastructure.Database;
 using MediatrCleanArchitecture.Infrastructure.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,12 +8,8 @@ namespace MediatrCleanArchitecture.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
-        services.AddDbContext<PostgresDataContext>(
-            opt => opt.UseNpgsql(configuration.GetConnectionString(PostgresDataContext.ConnectionStringName)));
-
-        services.AddScoped<IDbContext, PostgresDataContext>();
         return services;
     }
 
@@ -27,6 +22,12 @@ public static class ServiceCollectionExtensions
                 opt.ConnectionString = configuration.GetConnectionString(PostgresDataContext.ConnectionStringName);
             });
 
+        return services;
+    }
+
+    public static IServiceCollection AddPostgresDbContext(this IServiceCollection services, Action<DbContextOptionsBuilder> options)
+    {
+        services.AddDbContext<PostgresDataContext>(options);
         return services;
     }
 }
